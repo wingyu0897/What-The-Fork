@@ -20,11 +20,12 @@ public class LifeManager : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D collision) //충돌시 포크 정지
 	{
-
 		myController.enabled = false;
 		myRigid.velocity = Vector2.zero;
 		myRigid.angularVelocity = 0f;
 		myRigid.gravityScale = 0f;
+		if (collision.gameObject == GameObject.Find("Food")) Debug.Log("Success!");
+		else Debug.Log("Fail!");
 	}
 
 	public void GameReady()

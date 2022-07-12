@@ -16,20 +16,23 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		rigid2D = GetComponent<Rigidbody2D>();
-		rigid2D.velocity = transform.up * 5f;
+		rigid2D.gravityScale = 0f;
+	}
+
+	private void OnEnable()
+	{
+		rigid2D.velocity = transform.up * 4f;
+		rigid2D.gravityScale = 0.3f;
 	}
 
 	void Update()
     {
-		if (rotTime > 0) rotTime -= Time.deltaTime;
 		if (isDash) transform.up = rigid2D.velocity;
-		if (Input.GetMouseButtonDown(0)) Dash();
-		if (Input.GetMouseButtonDown(1)) Rotation();
     }
 
 	public void Rotation()
 	{
-		if (canRot) {
+		if (canRot && enabled) {
 			canRot = false;
 			StartCoroutine(RotCoolTime());
 			rotTime = 1.0f;
@@ -40,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Dash()
 	{
-		if (canDash) {
+		if (canDash && enabled) {
 			canDash = false;
 			StartCoroutine(DashCoolTime());
 			rigid2D.velocity = transform.up * 4f;
